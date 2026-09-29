@@ -25,8 +25,13 @@
   --line:rgba(255,255,255,.08);
   --line-2:rgba(255,255,255,.14);
 
-  --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  /* Pilha de fontes: prioriza as variaveis do sistema (Segoe UI Variable Display
+     no Win11, SF Pro Display no macOS), que tem pesos finos reais e desenho
+     moderno. Fallback cai em system-ui e nas estaticas. */
+  --sans:"Segoe UI Variable Display","SF Pro Display",system-ui,-apple-system,
+         "Segoe UI",Inter,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Cascadia Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,
+         "Liberation Mono","Courier New",monospace;
 
   --ease:cubic-bezier(.22,.61,.36,1);
   --ease-out:cubic-bezier(.16,1,.3,1);
@@ -119,15 +124,18 @@ body{
 
 /* rotulo de secao: texto normal, sem pílula nem fundo */
 .eyebrow{
-  display:block;font:600 11.5px/1.5 var(--mono);
-  letter-spacing:.19em;text-transform:uppercase;color:var(--blue);
-  margin-bottom:18px;
+  display:block;font:500 11px/1.5 var(--mono);
+  letter-spacing:.2em;text-transform:uppercase;color:var(--blue);
+  margin-bottom:16px;
 }
 
-h1{font-size:clamp(38px,6.4vw,80px);line-height:1.02;letter-spacing:-.035em;font-weight:800}
-h2{font-size:clamp(28px,4.1vw,52px);line-height:1.1;letter-spacing:-.028em;font-weight:800}
-h3{font-size:clamp(15.5px,1.45vw,19px);font-weight:700;letter-spacing:-.008em}
-.lede{font-size:clamp(15px,1.5vw,19px);color:var(--muted);line-height:1.62;max-width:66ch}
+/* Pesos mais leves: a hierarquia passa a vir do tamanho e do contraste,
+   nao de uma massa de negrito. */
+h1{font-size:clamp(36px,5.9vw,74px);line-height:1.04;letter-spacing:-.042em;font-weight:620}
+h2{font-size:clamp(26px,3.7vw,46px);line-height:1.12;letter-spacing:-.034em;font-weight:600}
+h3{font-size:clamp(15px,1.4vw,18px);font-weight:600;letter-spacing:-.012em;line-height:1.35}
+.lede{font-size:clamp(14.5px,1.42vw,17.5px);color:var(--muted);line-height:1.6;font-weight:380;
+  max-width:70ch}
 .hl{color:var(--ink)}
 .hl-b{color:var(--blue)}
 .grad{background:linear-gradient(100deg,var(--ink) 18%,var(--blue) 62%,#8ab6ff 100%);
@@ -157,7 +165,7 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
 .g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
 
-.stat b{display:block;font:800 clamp(30px,4.1vw,50px)/1 var(--sans);letter-spacing:-.03em;
+.stat b{display:block;font:620 clamp(30px,4.1vw,50px)/1 var(--sans);letter-spacing:-.03em;
   background:linear-gradient(150deg,#fff,#8ab6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat span{display:block;margin-top:9px;font:500 12.5px/1.45 var(--mono);
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -180,7 +188,7 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
 
 .feat{display:flex;gap:13px;align-items:flex-start}
 .feat__n{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
-  font:700 12px/1 var(--mono);background:var(--blue-dim);border:1px solid var(--blue-mid);color:#9cc9ff}
+  font:600 12px/1 var(--mono);background:var(--blue-dim);border:1px solid var(--blue-mid);color:#9cc9ff}
 .feat p{margin-top:6px;font-size:13.8px;color:var(--muted);line-height:1.55}
 
 .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
@@ -203,19 +211,28 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
   padding:14px 18px;border-radius:0 10px 10px 0;font-size:14px;color:#cfe3ff;line-height:1.6}
 .note--r{border-left-color:var(--red);background:var(--red-dim);color:#ffcfcb}
 
-/* slide tecnico: linhas de decisao */
-.techrow{display:grid;grid-template-columns:minmax(140px,168px) 1fr;gap:16px 20px;align-items:start;
-  padding:13px 0;border-top:1px solid var(--line)}
-.techrow:first-of-type{border-top:none;padding-top:4px}
-.techrow dt{font:700 14px/1.4 var(--sans);color:var(--ink)}
-.techrow dt small{display:block;margin-top:5px;font:500 11.5px/1.4 var(--mono);
+/* slide tecnico: linhas de decisao, em densidade compacta para caber na tela */
+.techrow{display:grid;grid-template-columns:minmax(132px,158px) 1fr;gap:12px 18px;align-items:start;
+  padding:10px 0;border-top:1px solid var(--line)}
+.techrow:first-of-type{border-top:none;padding-top:2px}
+.techrow dt{font:600 13.5px/1.35 var(--sans);color:var(--ink)}
+.techrow dt small{display:block;margin-top:4px;font:500 10.5px/1.35 var(--mono);
   color:var(--blue);letter-spacing:.04em}
-.techrow dd{font-size:14px;color:var(--muted);line-height:1.6}
+.techrow dd{font-size:13.2px;color:var(--muted);line-height:1.5}
 
-.archcode{font-family:var(--mono);font-size:12.6px;line-height:1.85;color:var(--muted);
-  background:rgba(0,0,0,.34);border:1px solid var(--line);border-radius:12px;
-  padding:18px 20px;white-space:pre;overflow-x:auto}
+.archcode{font-family:var(--mono);font-size:11.6px;line-height:1.68;color:var(--muted);
+  background:rgba(0,0,0,.34);border:1px solid var(--line);border-radius:11px;
+  padding:14px 16px;white-space:pre;overflow-x:auto}
 .archcode b{color:#9cc9ff;font-weight:600}
+
+/* variante densa: usada no slide de stack, que tem o maior volume de texto */
+.slide--dense .shead{margin-bottom:20px}
+.slide--dense .shead p{margin-top:11px}
+.slide--dense .card{padding:16px 17px}
+.slide--dense .grid{gap:12px}
+.slide--dense h2{font-size:clamp(24px,3.3vw,40px)}
+.slide--dense .lede{font-size:14px;max-width:82ch}
+.slide--dense ul{margin:11px 0 0;padding-left:19px;font-size:13px;line-height:1.62}
 
 .hero{position:relative;padding-right:min(46%,420px);min-height:440px;
   display:flex;flex-direction:column;justify-content:center}
@@ -251,12 +268,12 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
 .qrbox svg{width:186px;height:186px;display:block}
 .qrbox svg path{fill:#1E1E1E}
 .qrcap{margin-top:13px;text-align:center;line-height:1.5;
-  font:600 11px/1.45 var(--mono);letter-spacing:.08em;color:var(--muted)}
+  font:500 11px/1.45 var(--mono);letter-spacing:.08em;color:var(--muted)}
 .qrcap b{display:block;margin-top:5px;font-size:10.5px;color:var(--blue);letter-spacing:.03em;font-weight:600}
 
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:11px;
-  font:600 14.5px/1 var(--sans);text-decoration:none;transition:all .35s var(--ease);
+  font:550 14px/1 var(--sans);text-decoration:none;transition:all .35s var(--ease);
   border:1px solid transparent}
 .btn--p{background:var(--blue);color:#fff;box-shadow:0 14px 34px -12px rgba(10,132,255,.7)}
 .btn--p:hover{transform:translateY(-3px);box-shadow:0 20px 44px -12px rgba(10,132,255,.85)}
@@ -277,7 +294,7 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
   padding:18px clamp(18px,4vw,44px);pointer-events:none}
 .chrome > *{pointer-events:auto}
 
-.brand{display:flex;align-items:center;gap:10px;font:700 12.5px/1 var(--mono);
+.brand{display:flex;align-items:center;gap:10px;font:600 12.5px/1 var(--mono);
   letter-spacing:.1em;color:var(--muted)}
 .brand svg{width:19px;height:19px;stroke:var(--blue);fill:none;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round}
@@ -510,7 +527,7 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
 </section>
 
 <!-- ============ 5. STACK TECNICA ============ -->
-<section class="slide">
+<section class="slide slide--dense">
   <div class="wrap">
     <div class="shead">
       <span class="eyebrow rv">Decisões técnicas</span>
@@ -998,6 +1015,47 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
   addEventListener('resize', size, {passive:true});
   size();
   requestAnimationFrame(draw);
+
+  /* ============================================================
+     AJUSTE DE ALTURA — rede de seguranca contra transbordo.
+
+     Mede a altura natural de cada .wrap (offsetHeight, que ignora
+     transform) e compara com o espaco realmente disponivel no
+     slide. Se estourar, aplica uma escala uniforme e centralizada.
+     Sem isso, texto novo num slide quebra o layout silenciosamente.
+     ============================================================ */
+  var MIN_SCALE = 0.7;
+
+  function fitSlides(){
+    slides.forEach(function(s){
+      var w = s.querySelector('.wrap');
+      if (!w) return;
+      w.style.transform = '';
+
+      var cs = getComputedStyle(s);
+      var padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      var available = s.clientHeight - padY;
+      var natural = w.offsetHeight;
+
+      if (natural > available && available > 0){
+        var k = available / natural;
+        if (k < MIN_SCALE) k = MIN_SCALE;
+        w.style.transform = 'scale(' + k.toFixed(4) + ')';
+        w.style.transformOrigin = 'center center';
+      }
+    });
+  }
+
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(fitSlides).catch(function(){});
+  }
+  window.addEventListener('load', fitSlides);
+  var fitTimer;
+  addEventListener('resize', function(){
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitSlides, 120);
+  }, {passive:true});
+  setTimeout(fitSlides, 60);
 })();
 </script>
 </body>
