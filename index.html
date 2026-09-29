@@ -950,6 +950,7 @@ SQLite · techcards.db   user.home/.techcards/</pre>
   var W = 0, H = 0, DPR = 1;
   var GLYPHS = '{}[]()<>/*;=>#$\\01_+=abcdef';
   var bits = [];
+  var rafId = 0;
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function size(){
@@ -983,6 +984,7 @@ SQLite · techcards.db   user.home/.techcards/</pre>
   }
 
   function draw(){
+    if (document.hidden) { rafId = requestAnimationFrame(draw); return; }  // nao gasta CPU em aba oculta
     cx.clearRect(0, 0, W, H);
     for (var i = 0; i < bits.length; i++){
       var b = bits[i];
@@ -1001,7 +1003,7 @@ SQLite · techcards.db   user.home/.techcards/</pre>
       cx.fillText(b.ch, 0, 0);
       cx.restore();
     }
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
 
   addEventListener('resize', size, {passive:true});
