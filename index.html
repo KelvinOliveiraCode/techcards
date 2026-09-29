@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TechCards — do estudo solitário ao laboratório aberto</title>
-<meta name="description" content="TechCards: flashcards técnicos offline de Sistemas Operacionais, Arquitetura de Computadores e Inglês Instrumental. Projeto acadêmico de Ciência da Computação. Rumo ao open source e ao MCP.">
+<title>TechCards — apresentação do projeto</title>
+<meta name="description" content="TechCards: aplicação desktop offline de flashcards para Sistemas Operacionais, Arquitetura de Computadores e Inglês Instrumental. Projeto acadêmico de Ciência da Computação.">
 <style>
 /* ============================================================
    PALETA — extraida do design system do proprio aplicativo
@@ -17,11 +17,11 @@
   --muted:#A0A0A0;     /* Cinza Claro — texto secundario */
   --black:#000000;     /* Preto — sombras e separacao */
   --blue:#0A84FF;      /* Azul Tech — acao primaria, progresso, acerto */
-  --red:#FF453A;       /* Vermelho Alerta — erro, destructivo */
+  --red:#FF453A;       /* Vermelho Alerta — erro, nao entregue */
 
   --blue-dim:rgba(10,132,255,.14);
   --blue-mid:rgba(10,132,255,.32);
-  --red-dim:rgba(255,69,58,.14);
+  --red-dim:rgba(255,69,58,.13);
   --line:rgba(255,255,255,.08);
   --line-2:rgba(255,255,255,.14);
 
@@ -55,23 +55,21 @@ body{
 }
 @keyframes gridDrift{to{transform:translate3d(64px,64px,0)}}
 
-/* aurora: tres massas de cor em deriva perpetual, com respiracao */
 .bg__aurora{position:absolute;inset:0;filter:blur(90px);opacity:.5}
 .blob{position:absolute;border-radius:50%;mix-blend-mode:screen;will-change:transform}
 .blob--a{width:52vmax;height:52vmax;left:-14vmax;top:-16vmax;
   background:radial-gradient(circle at 40% 40%,rgba(10,132,255,.85),transparent 68%);
   animation:driftA 34s var(--ease) infinite alternate}
 .blob--b{width:46vmax;height:46vmax;right:-12vmax;top:6vmax;
-  background:radial-gradient(circle at 55% 45%,rgba(255,69,58,.42),transparent 66%);
+  background:radial-gradient(circle at 45% 45%,rgba(255,69,58,.38),transparent 66%);
   animation:driftB 44s var(--ease) infinite alternate}
 .blob--c{width:40vmax;height:40vmax;left:26vmax;bottom:-18vmax;
-  background:radial-gradient(circle at 50% 50%,rgba(120,80,255,.40),transparent 70%);
+  background:radial-gradient(circle at 50% 50%,rgba(120,80,255,.38),transparent 70%);
   animation:driftC 39s var(--ease) infinite alternate}
 @keyframes driftA{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(16vmax,10vmax,0) scale(1.22)}}
 @keyframes driftB{0%{transform:translate3d(0,0,0) scale(1.1)}100%{transform:translate3d(-18vmax,14vmax,0) scale(.9)}}
 @keyframes driftC{0%{transform:translate3d(0,0,0) scale(.95)}100%{transform:translate3d(10vmax,-14vmax,0) scale(1.18)}}
 
-/* varredura de luz vertical, lenta e continua */
 .bg__scan{
   position:absolute;inset:0;
   background:linear-gradient(180deg,transparent 0%,rgba(10,132,255,.07) 45%,rgba(255,255,255,.05) 50%,transparent 100%);
@@ -79,13 +77,9 @@ body{
 }
 @keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
 
-/* vinheta para focar o olho no centro */
 .bg__vignette{position:absolute;inset:0;
   background:radial-gradient(ellipse at 50% 45%,transparent 38%,rgba(0,0,0,.62) 100%)}
 
-/* ============================================================
-   CAMADA 2 — particulas em canvas (codigo/letras flutuando)
-   ============================================================ */
 #fx{position:fixed;inset:0;z-index:1;pointer-events:none}
 
 /* ============================================================
@@ -107,7 +101,6 @@ body{
 
 .wrap{width:100%;max-width:1180px}
 
-/* revelacao escalonada dos filhos quando o slide entra */
 .slide.is-active .rv{animation:rise .78s var(--ease-out) backwards}
 .slide.is-active .rv:nth-child(1){animation-delay:.10s}
 .slide.is-active .rv:nth-child(2){animation-delay:.19s}
@@ -123,33 +116,32 @@ body{
 /* ============================================================
    TIPOGRAFIA
    ============================================================ */
+
+/* rotulo de secao: texto normal, sem pílula nem fundo */
 .eyebrow{
-  display:inline-flex;align-items:center;gap:9px;
-  font:600 11.5px/1 var(--mono);letter-spacing:.19em;text-transform:uppercase;
-  color:var(--blue);background:var(--blue-dim);
-  border:1px solid var(--blue-mid);border-radius:999px;
-  padding:8px 15px;margin-bottom:26px;
+  display:block;font:600 11.5px/1.5 var(--mono);
+  letter-spacing:.19em;text-transform:uppercase;color:var(--blue);
+  margin-bottom:18px;
 }
-.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);
-  box-shadow:0 0 0 0 var(--blue-mid);animation:pulse 2.4s var(--ease) infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(10,132,255,.55)}70%{box-shadow:0 0 0 9px rgba(10,132,255,0)}100%{box-shadow:0 0 0 0 rgba(10,132,255,0)}}
 
 h1{font-size:clamp(38px,6.4vw,80px);line-height:1.02;letter-spacing:-.035em;font-weight:800}
-h2{font-size:clamp(29px,4.3vw,54px);line-height:1.08;letter-spacing:-.028em;font-weight:800}
-h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
-.lede{font-size:clamp(15.5px,1.55vw,20px);color:var(--muted);line-height:1.62;max-width:64ch}
+h2{font-size:clamp(28px,4.1vw,52px);line-height:1.1;letter-spacing:-.028em;font-weight:800}
+h3{font-size:clamp(15.5px,1.45vw,19px);font-weight:700;letter-spacing:-.008em}
+.lede{font-size:clamp(15px,1.5vw,19px);color:var(--muted);line-height:1.62;max-width:66ch}
 .hl{color:var(--ink)}
 .hl-b{color:var(--blue)}
-.hl-r{color:var(--red)}
 .grad{background:linear-gradient(100deg,var(--ink) 18%,var(--blue) 62%,#8ab6ff 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
+
+code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
+  background:rgba(10,132,255,.09);padding:1px 5px;border-radius:4px}
 
 /* ============================================================
    COMPONENTES
    ============================================================ */
 .card{
   background:linear-gradient(168deg,rgba(45,45,45,.94),rgba(32,32,32,.94));
-  border:1px solid var(--line);border-radius:16px;padding:22px 22px;
+  border:1px solid var(--line);border-radius:16px;padding:21px 22px;
   position:relative;overflow:hidden;
   transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease);
 }
@@ -165,19 +157,19 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
 
-.stat{text-align:left}
 .stat b{display:block;font:800 clamp(30px,4.1vw,50px)/1 var(--sans);letter-spacing:-.03em;
   background:linear-gradient(150deg,#fff,#8ab6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat span{display:block;margin-top:9px;font:500 12.5px/1.45 var(--mono);
   letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .stat i{display:block;margin-top:11px;font-style:normal;font-size:13.5px;color:var(--muted);line-height:1.5}
 
-.chip{display:inline-block;font:600 12px/1 var(--mono);letter-spacing:.04em;
-  padding:7px 12px;border-radius:8px;background:rgba(255,255,255,.05);
-  border:1px solid var(--line);color:var(--ink)}
-.chip--b{background:var(--blue-dim);border-color:var(--blue-mid);color:#9cc9ff}
-.chip--r{background:var(--red-dim);border-color:rgba(255,69,58,.3);color:#ff9a93}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+/* rotulo de estado: discreto, apenas contorno */
+.tag{display:inline-block;font:600 11.5px/1 var(--mono);letter-spacing:.11em;
+  text-transform:uppercase;padding:6px 10px;border-radius:6px;
+  background:transparent;border:1px solid var(--line-2);color:var(--muted)}
+.tag--b{color:#9cc9ff;border-color:var(--blue-mid)}
+.tag--r{color:#ff9a93;border-color:rgba(255,69,58,.32)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 
 .disc{display:flex;align-items:flex-start;gap:14px}
 .disc__ic{flex:0 0 auto;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
@@ -192,7 +184,7 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
 .feat p{margin-top:6px;font-size:13.8px;color:var(--muted);line-height:1.55}
 
 .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
-.flow__step{flex:1 1 0;min-width:150px;position:relative;padding:20px 18px;
+.flow__step{flex:1 1 0;min-width:150px;position:relative;padding:19px 18px;
   background:rgba(45,45,45,.72);border:1px solid var(--line);border-right:none}
 .flow__step:first-child{border-radius:14px 0 0 14px}
 .flow__step:last-child{border-right:1px solid var(--line);border-radius:0 14px 14px 0}
@@ -202,23 +194,31 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
   transform:translateY(-50%) rotate(45deg);background:rgba(45,45,45,.72);
   border-top:1px solid var(--line);border-right:1px solid var(--line);z-index:2}
 
-.term{display:grid;grid-template-columns:auto 1fr;gap:9px 13px;align-items:baseline;
-  font-family:var(--mono);font-size:13.5px}
+.term{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;align-items:baseline;
+  font-family:var(--mono);font-size:13.2px}
 .term dt{color:#9cc9ff;white-space:nowrap}
 .term dd{color:var(--muted)}
 
 .note{border-left:2px solid var(--blue);background:var(--blue-dim);
-  padding:15px 18px;border-radius:0 10px 10px 0;font-size:14px;color:#cfe3ff;line-height:1.6}
+  padding:14px 18px;border-radius:0 10px 10px 0;font-size:14px;color:#cfe3ff;line-height:1.6}
 .note--r{border-left-color:var(--red);background:var(--red-dim);color:#ffcfcb}
 
-.badge{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;
-  background:rgba(255,255,255,.05);border:1px solid var(--line-2);
-  font:600 12.5px/1 var(--sans);color:var(--ink)}
-.badge svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;
-  stroke-linecap:round;stroke-linejoin:round;color:var(--blue)}
+/* slide tecnico: linhas de decisao */
+.techrow{display:grid;grid-template-columns:minmax(140px,168px) 1fr;gap:16px 20px;align-items:start;
+  padding:13px 0;border-top:1px solid var(--line)}
+.techrow:first-of-type{border-top:none;padding-top:4px}
+.techrow dt{font:700 14px/1.4 var(--sans);color:var(--ink)}
+.techrow dt small{display:block;margin-top:5px;font:500 11.5px/1.4 var(--mono);
+  color:var(--blue);letter-spacing:.04em}
+.techrow dd{font-size:14px;color:var(--muted);line-height:1.6}
 
-/* cartao empilhado 3D do herói */
-.hero{position:relative;padding-right:min(46%,420px);min-height:440px;display:flex;flex-direction:column;justify-content:center}
+.archcode{font-family:var(--mono);font-size:12.6px;line-height:1.85;color:var(--muted);
+  background:rgba(0,0,0,.34);border:1px solid var(--line);border-radius:12px;
+  padding:18px 20px;white-space:pre;overflow-x:auto}
+.archcode b{color:#9cc9ff;font-weight:600}
+
+.hero{position:relative;padding-right:min(46%,420px);min-height:440px;
+  display:flex;flex-direction:column;justify-content:center}
 .stack{position:absolute;right:0;top:50%;width:min(42%,390px);height:300px;transform:translateY(-50%);
   perspective:1400px;transform-style:preserve-3d}
 .stack__c{position:absolute;inset:0;border-radius:18px;padding:24px;
@@ -237,30 +237,48 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
 .stack__c--3::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue);
   border-radius:18px 0 0 18px}
 
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:11px;
-  font:600 14.5px/1 var(--sans);text-decoration:none;transition:all .35s var(--ease);cursor:pointer;
+/* ============================================================
+   QR CODE (ultimo slide)
+   ============================================================ */
+.qrow{display:grid;grid-template-columns:1fr auto;gap:34px;align-items:center}
+.qrbox{background:#FFFFFF;border-radius:16px;padding:16px;line-height:0;
+  box-shadow:0 24px 60px -22px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.14);
+  transition:transform .55s var(--ease),box-shadow .55s var(--ease)}
+.qrbox:hover{transform:translateY(-5px) scale(1.02);
+  box-shadow:0 30px 70px -22px rgba(0,0,0,1),0 0 0 1px var(--blue-mid)}
+.qrbox svg{width:186px;height:186px;display:block}
+.qrbox svg path{fill:#1E1E1E}
+.qrcap{margin-top:13px;text-align:center;line-height:1.5;
+  font:600 11px/1.45 var(--mono);letter-spacing:.08em;color:var(--muted)}
+.qrcap b{display:block;margin-top:5px;font-size:10.5px;color:var(--blue);letter-spacing:.03em;font-weight:600}
+
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:11px;
+  font:600 14.5px/1 var(--sans);text-decoration:none;transition:all .35s var(--ease);
   border:1px solid transparent}
-.btn--p{background:var(--blue);color:#fff;box-shadow:0 14px 34px -12px rgba(10,132,255,.75)}
-.btn--p:hover{transform:translateY(-3px);box-shadow:0 20px 44px -12px rgba(10,132,255,.9)}
+.btn--p{background:var(--blue);color:#fff;box-shadow:0 14px 34px -12px rgba(10,132,255,.7)}
+.btn--p:hover{transform:translateY(-3px);box-shadow:0 20px 44px -12px rgba(10,132,255,.85)}
 .btn--g{background:rgba(255,255,255,.05);border-color:var(--line-2);color:var(--ink)}
 .btn--g:hover{transform:translateY(-3px);background:rgba(255,255,255,.09);border-color:var(--blue-mid)}
 .btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9;
   stroke-linecap:round;stroke-linejoin:round}
 
 /* ============================================================
-   CHROME — barra de progresso, nav, pontos, contador
+   CHROME — sem autoplay: a barra marca posicao, nao tempo
    ============================================================ */
-.progress{position:fixed;left:0;top:0;height:2px;background:linear-gradient(90deg,var(--blue),#8ab6ff);
-  z-index:40;width:0;transition:width .18s linear;box-shadow:0 0 14px rgba(10,132,255,.7)}
+.progress{position:fixed;left:0;top:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),#8ab6ff);z-index:40;width:8.33%;
+  box-shadow:0 0 14px rgba(10,132,255,.7)}
 
 .chrome{position:fixed;z-index:40;left:0;right:0;bottom:0;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:18px clamp(18px,4vw,44px);pointer-events:none}
 .chrome > *{pointer-events:auto}
 
-.brand{display:flex;align-items:center;gap:10px;font:700 12.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted)}
-.brand svg{width:19px;height:19px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.brand{display:flex;align-items:center;gap:10px;font:700 12.5px/1 var(--mono);
+  letter-spacing:.1em;color:var(--muted)}
+.brand svg{width:19px;height:19px;stroke:var(--blue);fill:none;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round}
 
 .dots{display:flex;gap:8px;align-items:center}
 .dot{width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;padding:0;
@@ -274,16 +292,17 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
   transition:all .35s var(--ease)}
 .nb:hover:not(:disabled){background:var(--blue);border-color:var(--blue);transform:translateY(-2px)}
 .nb:disabled{opacity:.3;cursor:default}
-.nb svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.count{font:600 12.5px/1 var(--mono);color:var(--muted);min-width:56px;text-align:center;letter-spacing:.06em}
+.nb svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+.count{font:600 12.5px/1 var(--mono);color:var(--muted);min-width:62px;
+  text-align:center;letter-spacing:.06em}
 
 .hint{position:fixed;z-index:41;top:22px;right:clamp(18px,4vw,44px);
-  font:500 11.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:rgba(160,160,160,.6);
-  animation:fadeOut 1s 7s forwards}
+  font:500 11.5px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:rgba(160,160,160,.55);animation:fadeOut 1s 8s forwards}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
-/* titulo de secao acima do conteudo */
-.shead{margin-bottom:30px;max-width:80ch}
+.shead{margin-bottom:28px;max-width:82ch}
 .shead p{margin-top:15px}
 
 /* ============================================================
@@ -294,6 +313,8 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
   .g3{grid-template-columns:repeat(2,1fr)}
   .hero{padding-right:0;min-height:0;padding-bottom:300px}
   .stack{width:min(100%,360px);height:250px;top:auto;bottom:0;transform:none;margin:0 auto}
+  .qrow{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .qrow .cta{justify-content:center}
 }
 @media (max-width:720px){
   .g2,.g3,.g4{grid-template-columns:1fr}
@@ -304,6 +325,8 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
   .chrome{padding:14px 16px;gap:10px}
   .dots{display:none}
   .count{min-width:44px;font-size:11px}
+  .techrow{grid-template-columns:1fr;gap:6px}
+  .qrbox svg{width:158px;height:158px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;animation-iteration-count:1 !important;
@@ -331,411 +354,490 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
 
 <main class="deck" id="deck">
 
-<!-- ============ 1. HERÓI ============ -->
+<!-- ============ 1. ABERTURA ============ -->
 <section class="slide">
   <div class="wrap hero">
     <div>
-      <span class="eyebrow rv">Projeto acadêmico · Ciência da Computação</span>
-      <h1 class="rv" style="margin-bottom:22px">Do estudo<br>solitário ao<br><span class="grad">laboratório aberto.</span></h1>
-      <p class="lede rv">TechCards é um aplicativo desktop que junta quatro disciplinas
-        difíceis em um só lugar — e hoje está pronto para abrir o código.</p>
-      <div class="chips rv">
-        <span class="chip chip--b">Java 21</span>
-        <span class="chip chip--b">JavaFX 21</span>
-        <span class="chip chip--b">SQLite</span>
-        <span class="chip">100% offline</span>
-        <span class="chip">Open source</span>
+      <span class="eyebrow rv">Trabalho acadêmico · Ciência da Computação</span>
+      <h1 class="rv" style="margin-bottom:22px">TechCards</h1>
+      <p class="lede rv">Aplicação desktop offline para estudo de Sistemas Operacionais,
+        Arquitetura de Computadores e Inglês Instrumental. Desenvolvida em Java como
+        trabalho da disciplina de Programação Orientada a Objetos.</p>
+      <div class="tags rv">
+        <span class="tag tag--b">Java 21</span>
+        <span class="tag tag--b">JavaFX 21</span>
+        <span class="tag tag--b">SQLite</span>
+        <span class="tag">100% offline</span>
+        <span class="tag">v1.2.0</span>
       </div>
       <div class="cta rv">
-        <a class="btn btn--p" href="#">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          Ver o que já funciona
+        <a class="btn btn--p" href="https://github.com/KelvinOliveiraCode/techcards" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.1-.4 6.4-1.6 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A5 5 0 0 0 5 4.8 5.4 5.4 0 0 0 3.6 7.5c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-1 2.6V22"/></svg>
+          Repositório
         </a>
         <a class="btn btn--g" href="#">
-          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.1-.4 6.4-1.6 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A5 5 0 0 0 5 4.8 5.4 5.4 0 0 0 3.6 7.5c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-1 2.6V22"/></svg>
-          Ver a visão
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          Ver o escopo entregue
         </a>
       </div>
     </div>
     <div class="stack" aria-hidden="true">
-      <div class="stack__c stack__c--1"><small>Arquitetura</small><p>Cache hit e miss dependem do policies de substituição…</p></div>
+      <div class="stack__c stack__c--1"><small>Arquitetura</small><p>Cache hit e miss dependem da política de substituição…</p></div>
       <div class="stack__c stack__c--2"><small>Sistemas Operacionais</small><p>Deadlock exige hold-and-wait. Qual a condição necessária?</p></div>
       <div class="stack__c stack__c--3"><small>Sistemas Operacionais</small><p>Qual a diferença entre escalonamento preemptivo e não-preemptivo?</p></div>
     </div>
   </div>
 </section>
 
-<!-- ============ 2. O PROBLEMA ============ -->
+<!-- ============ 2. CONTEXTO ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">O ponto de partida</span>
-      <h2 class="rv">Quatro matérias. <span class="hl-b">Nenhuma ferramenta de verdade.</span></h2>
-      <p class="lede rv">Sistemas Operacionais, Arquitetura, Programação Orientada a Objetos e
-        Inglês Instrumental converge num só semestre — e convergem em quatro formatos
-        diferentes: PDF, slide, vídeo e apostila. Estudar meaning em vez de reagir.</p>
+      <span class="eyebrow rv">Contexto</span>
+      <h2 class="rv">Quatro disciplinas, quatro formatos distintos</h2>
+      <p class="lede rv">Sistemas Operacionais, Arquitetura de Computadores, Programação
+        Orientada a Objetos e Inglês Instrumental aparecem no mesmo semestre e em formatos
+        que não conversam entre si.</p>
     </div>
     <div class="grid g3">
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 5.5v14A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div>
-          <div><h3>Volume sem estrutura</h3><p>90 questões espalhadas em PDFs de 60 páginas. Nada indica o que já foi dominado.</p></div>
+          <div><h3>Volume sem estrutura</h3><p>90 questões distribuídas em PDFs longos. Nada indica o que já foi dominado e o que ainda não.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg></div>
-          <div><h3>Fuso de conteúdo</h3><p>Decks de SO, de arquitetura e de inglês nunca são estudados juntos — porque nenhuma ferramenta junta os três.</p></div>
+          <div><h3>Conteúdo disperso</h3><p>Decks de SO, de arquitetura e de inglês não são estudados juntos, porque nenhuma ferramenta reúne os três.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4z"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3"/></svg></div>
-          <div><h3>Revisão que não acontece</h3><p>Reler é fácil. Relembrar o que caiu na prova de ontem exige repetição espaçada — e disciplina.</p></div>
+          <div><h3>Revisão irregular</h3><p>Reler é fácil. Relembrar o conteúdo visto há duas semanas exige repetição planejada.</p></div>
         </div>
       </div>
     </div>
     <div class="note rv" style="margin-top:26px">
-        <strong>TechCards não tenta substituir o professor.</strong> Tenta substituir o
-        lugar acidental onde a revisão previsível acontece.
+      A aplicação não substitui o material do curso. Ela cobre o intervalo em que a
+      revisão normalmente deixa de acontecer.
     </div>
   </div>
 </section>
 
-<!-- ============ 3. AS 4 DISCIPLINAS ============ -->
+<!-- ============ 3. AS DISCIPLINAS ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Trabalho acadêmico</span>
-      <h2 class="rv">Um projeto que <span class="hl-b">cruza quatro disciplinas</span> de verdade</h2>
-      <p class="lede rv">Cada deck do aplicativo existe porque uma disciplina do curso pediu —
-        e o software em si é o artefato de Programação Orientada a Objetos.</p>
+      <span class="eyebrow rv">Abrangência</span>
+      <h2 class="rv">As quatro disciplinas do semestre</h2>
+      <p class="lede rv">Cada deck existe porque uma disciplina do curso pediu. E o software
+        em si é o artefato de Programação Orientada a Objetos.</p>
     </div>
     <div class="grid g4">
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
-          <div><h3>POO · Java</h3><p>Java 21 + JavaFX. Arquitetura em camadas: <code style="font-family:var(--mono);font-size:12.5px;color:#9cc9ff">UI → Services → DAO → SQLite</code>. O software é o trabalho.</p></div>
+          <div><h3>POO · Java</h3><p>Java 21 com JavaFX. Arquitetura em camadas: <code>UI → Services → DAO → SQLite</code>. O aplicativo é o trabalho da disciplina.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01M6 17h.01"/></svg></div>
-          <div><h3>Sistemas Operacionais</h3><p>30 cards. Escalonamento, deadlock, memória virtual, sincronização.</p></div>
+          <div><h3>Sistemas Operacionais</h3><p>30 cards. Escalonamento, deadlock, memória virtual e sincronização.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
-          <div><h3>Arquitetura de Computadores</h3><p>30 cards. Pipeline, cache, ISA, hierarquia de memória.</p></div>
+          <div><h3>Arquitetura de Computadores</h3><p>30 cards. Pipeline, cache, ISA e hierarquia de memória.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M10 9h8M10 13h5"/></svg></div>
-          <div><h3>Inglês Instrumental</h3><p>30 cards. Não é inglês decorado: é o inglês que aparece em manual, spec e paper.</p></div>
+          <div><h3>Inglês Instrumental</h3><p>30 cards. Não é inglês decorado: é o inglês que aparece em manual, especificação e artigo.</p></div>
         </div>
       </div>
     </div>
     <div class="note rv" style="margin-top:26px">
-      <strong>90 questões embutidas</strong> — e o banco é seu. Roda offline, num
-      arquivo <code style="font-family:var(--mono);font-size:12.5px">techcards.db</code> local,
-      sem conta e sem servidor.
+      <strong>90 questões embutidas</strong> e banco sob controle do usuário. Roda offline,
+      num arquivo SQLite local, sem conta e sem servidor.
     </div>
   </div>
 </section>
 
-<!-- ============ 4. O QUE EXISTE HOJE ============ -->
+<!-- ============ 4. ESCOPO ENTREGUE ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Estado atual · o que já funciona</span>
-      <h2 class="rv">Não é um protótipo. <span class="hl-b">É um produto.</span></h2>
-      <p class="lede rv">Cada item abaixo está implementado, testado e empacotado. Não é plano — é o que está no <code style="font-family:var(--mono);font-size:13px">.exe</code>.</p>
+      <span class="eyebrow rv">Escopo entregue · v1.2.0</span>
+      <h2 class="rv">O que está implementado e testado</h2>
+      <p class="lede rv">Os itens abaixo estão no código, cobertos por testes automatizados e
+        incluídos no pacote distribuível. Não é plano de trabalho — é o estado atual.</p>
     </div>
     <div class="grid g3">
       <div class="card rv">
-        <div class="feat"><div class="feat__n">01</div><div><h3>Cinco telas completas</h3><p>Decks, Cards, Estudo, Dashboard e Configurações. Navegação inteira, sem tela morta.</p></div></div>
+        <div class="feat"><div class="feat__n">01</div><div><h3>Cinco telas</h3><p>Decks, Cards, Estudo, Dashboard e Configurações. Navegação completa, sem tela inacessível.</p></div></div>
       </div>
       <div class="card rv">
-        <div class="feat"><div class="feat__n">02</div><div><h3>90 cards em 3 decks</h3><p>Sistemas Operacionais, Arquitetura e Inglês, semeados no primeiro uso. Escritos para o contexto do curso.</p></div></div>
+        <div class="feat"><div class="feat__n">02</div><div><h3>90 cards em 3 decks</h3><p>Semeados no primeiro uso. Escritos para o contexto do curso, não adaptados de questionário genérico.</p></div></div>
       </div>
       <div class="card rv">
-        <div class="feat"><div class="feat__n">03</div><div><h3>CRUD com proteção</h3><p>Cria, edita e exclui decks e cards. Deck padrão é somente-leitura — o caminho é duplicar.</p></div></div>
+        <div class="feat"><div class="feat__n">03</div><div><h3>CRUD com proteção</h3><p>Cria, edita e exclui decks e cards. Deck padrão é somente-leitura; o caminho é duplicar.</p></div></div>
       </div>
       <div class="card rv">
         <div class="feat"><div class="feat__n">04</div><div><h3>Estudo configurável</h3><p>Fila embaralhada por quantidade aleatória ou por dificuldade. Card vira em 3D, com som e streak.</p></div></div>
       </div>
       <div class="card rv">
-        <div class="feat"><div class="feat__n">05</div><div><h3>Dashboard que persegue o erro</h3><p>Top 5 cards que você mais errou, desempenho por deck, aproveitamento e <strong>streak diário</strong>.</p></div></div>
+        <div class="feat"><div class="feat__n">05</div><div><h3>Dashboard orientado a erro</h3><p>Top 5 cards mais errados, desempenho por deck, aproveitamento e streak diário.</p></div></div>
       </div>
       <div class="card rv">
-        <div class="feat"><div class="feat__n">06</div><div><h3>Backup e restauração</h3><p>Exportar/importar o <code style="font-family:var(--mono);font-size:12px">.db</code>, restaurar seeds e limpar histórico. Exclusão é lógica, então dá para voltar atrás.</p></div></div>
+        <div class="feat"><div class="feat__n">06</div><div><h3>Backup e restauração</h3><p>Exportar e importar o <code>.db</code>, restaurar seeds e limpar histórico. Exclusão é lógica, então é reversível.</p></div></div>
       </div>
     </div>
-    <div class="chips rv" style="margin-top:24px">
-      <span class="chip">46 testes automatizados · 46 passando</span>
-      <span class="chip">JRE 21 embutido</span>
-      <span class="chip chip--b">0 dependências de rede</span>
-      <span class="chip">74,5 MB</span>
+    <div class="tags rv" style="margin-top:24px">
+      <span class="tag">46 testes automatizados · 46 passando</span>
+      <span class="tag">JRE 21 embarcado</span>
+      <span class="tag tag--b">0 dependências de rede</span>
+      <span class="tag">74,5 MB</span>
     </div>
   </div>
 </section>
 
-<!-- ============ 5. COMO FUNCIONA ============ -->
+<!-- ============ 5. STACK TECNICA ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Fluxo</span>
-      <h2 class="rv">Do clique ao dado, <span class="hl-b">em quatro passos</span></h2>
+      <span class="eyebrow rv">Decisões técnicas</span>
+      <h2 class="rv">Stack e as razões de cada escolha</h2>
+      <p class="lede rv">Nenhuma tecnologia foi adotada por preferência de moda. As seis
+        decisões abaixo explicam o desenho do aplicativo.</p>
+    </div>
+    <div class="grid g2" style="align-items:start">
+      <div class="card rv">
+        <dl>
+          <div class="techrow">
+            <dt>Java 21 <small>LTS</small></dt>
+            <dd>Suporte longo reduz o risco de reescrita e abre espaço para recursos estáveis: <code>records</code>, <code>sealed</code> e <code>switch</code> com pattern matching deixam o modelo de domínio mais explícito. É também a linguagem pedida na disciplina.</dd>
+          </div>
+          <div class="techrow">
+            <dt>JavaFX 21 <small>UI</small></dt>
+            <dd>Interface desktop nativa, sem browser embutido. O design system é escrito em CSS, então a paleta vive em um arquivo — e não espalhada por controllers.</dd>
+          </div>
+          <div class="techrow">
+            <dt>SQLite <small>sqlite-jdbc</small></dt>
+            <dd>Arquivo único, transacional e sem servidor. Isso elimina conta, login, sincronização e migração de esquema — o banco cabe em um <code>.db</code> que vai para o zip, para o backup e para o versionamento.</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="card rv">
+        <dl>
+          <div class="techrow">
+            <dt>Maven <small>+ shade</small></dt>
+            <dd>Build reprodutível e declarativo. O shade plugin resolve as dependências em um único jar executável, que é o pré-requisito do empacotamento nativo.</dd>
+          </div>
+          <div class="techrow">
+            <dt>jpackage <small>app-image</small></dt>
+            <dd>Gera o pacote com o JRE 21 embarcado. O destinatário não instala Java, e o aplicativo abre sem rede — o que era requisito do projeto.</dd>
+          </div>
+          <div class="techrow">
+            <dt>JUnit 5 <small>46 testes</small></dt>
+            <dd>Cobrem DAO, seed, CRUD, estudo e métricas. Rodam sem subir interface porque a regra de negócio está isolada na camada de Service — a separação existe para tornar isso possível.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:16px;align-items:start">
+      <div class="card rv">
+        <h3>Arquitetura em camadas</h3>
+        <pre class="archcode" style="margin-top:13px">┌──────────────────────────────┐
+│  UI · JavaFX + CSS           │  Controllers e FXML
+├──────────────────────────────┤
+│  Services · regras de negócio│  DeckService, EstudoService…
+├──────────────────────────────┤
+│  DAO / Repositório           │  DeckDAO, CardDAO…
+├──────────────────────────────┤
+│  SQLite · techcards.db       │  user.home/.techcards/
+└──────────────────────────────┘</pre>
+      </div>
+      <div class="card rv">
+        <h3>Consequências práticas</h3>
+        <p style="margin-top:11px;font-size:14px;color:var(--muted);line-height:1.62">
+          Nenhuma camada depende de outra além da direção da regra: a UI
+          conhece os Services, os Services conhecem o DAO, e o DAO conhece o SQL.
+        </p>
+        <ul style="margin:14px 0 0;padding-left:20px;font-size:14px;color:var(--muted);line-height:1.72">
+          <li>Testes de regra de negócio rodam sem interface gráfica</li>
+          <li>Trocar o SQLite por outro banco mexe só no DAO</li>
+          <li>A seed entra por <code>seed.json</code>, sem SQL hardcoded</li>
+          <li>O backup é copiar um arquivo, porque não há servidor</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. FLUXO ============ -->
+<section class="slide">
+  <div class="wrap">
+    <div class="shead">
+      <span class="eyebrow rv">Funcionamento</span>
+      <h2 class="rv">Fluxo de uma sessão de estudo</h2>
     </div>
     <div class="flow rv" style="margin-bottom:30px">
-      <div class="flow__step"><b>Configure</b><span>Modo aleatório com um contador, ou por dificuldade — você decide quantos cards e de quais.</span></div>
-      <div class="flow__step"><b>Responda</b><span>A frente aparece. Pense. O verso fica oculto até você decidir virar.</span></div>
-      <div class="flow__step"><b>Vire o card</b><span>Virada 3D em 350 ms, som sintetizado e animação de acerto ou erro.</span></div>
-      <div class="flow__step"><b>Feche a sessão</b><span>Acertos, erros, % de aproveitamento e o streak do dia.</span></div>
+      <div class="flow__step"><b>Configure</b><span>Modo aleatório com um contador, ou seleção por dificuldade. Você define quantos cards e de quais.</span></div>
+      <div class="flow__step"><b>Responda</b><span>A frente aparece. O verso permanece oculto até a decisão de virar o card.</span></div>
+      <div class="flow__step"><b>Vire o card</b><span>Virada 3D em 350 ms, som sintetizado e animação distinta para acerto e erro.</span></div>
+      <div class="flow__step"><b>Feche a sessão</b><span>Acertos, erros, percentual de aproveitamento e o streak do dia.</span></div>
     </div>
     <div class="grid g2">
       <div class="card rv">
-        <h3>Por que o SQLite</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">O banco é um arquivo local em <code style="font-family:var(--mono);font-size:12.5px">%USERPROFILE%/.techcards/</code>. Sem servidor, sem login, sem nuvem. O app funciona no metrô com o Wi-Fi desligado — e o histórico é seu.</p>
-        <div class="chips" style="margin-top:15px">
-          <span class="chip">0 contas</span><span class="chip">0 servidor</span><span class="chip">100% offline</span>
+        <h3>Por que SQLite</h3>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">O banco é um arquivo local em <code>%USERPROFILE%/.techcards/</code>. Sem servidor, sem login, sem nuvem. O aplicativo funciona sem rede e o histórico permanece na máquina do usuário.</p>
+        <div class="tags" style="margin-top:15px">
+          <span class="tag">0 contas</span><span class="tag">0 servidor</span><span class="tag">100% offline</span>
         </div>
       </div>
       <div class="card rv">
-        <h3>Por que importa</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">Um reviso repetido amanhã vale mais que uma hora de conteúdo novo. O histórico existe para mostrar o que você errou duas vezes seguidas — e o dashboard já te mostra. O que falta é a fila de estudo montada em cima disso.</p>
+        <h3>Por que registrar histórico</h3>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">O histórico existe para apontar o que foi errado de forma repetida. O dashboard já apresenta esse ranking. O que ainda falta é usá-lo para montar a fila de estudo automaticamente.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 6. NÚMEROS ============ -->
+<!-- ============ 7. NUMEROS ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">O que existe, em números</span>
-      <h2 class="rv">A conta até hoje</h2>
+      <span class="eyebrow rv">Números da v1.2.0</span>
+      <h2 class="rv">O estado atual em números</h2>
     </div>
     <div class="grid g4">
       <div class="card stat rv"><b>90</b><span>Questões</span><i>3 decks × 30 cards</i></div>
       <div class="card stat rv"><b>3</b><span>Disciplinas</span><i>SO · Arquitetura · Inglês</i></div>
       <div class="card stat rv"><b>46</b><span>Testes</span><i>DAO, seed, CRUD, estudo, métricas — todos passando</i></div>
-      <div class="card stat rv"><b>0</b><span>Servidores</span><i>Nada sai da sua máquina</i></div>
+      <div class="card stat rv"><b>0</b><span>Servidores</span><i>Nada sai da máquina do usuário</i></div>
     </div>
     <div class="grid g2" style="margin-top:16px">
       <div class="card rv">
         <h3>Stack</h3>
         <dl class="term" style="margin-top:14px">
           <dt>Java</dt><dd>21 LTS</dd>
-          <dt>UI</dt><dd>JavaFX 21 + CSS próprio</dd>
+          <dt>Interface</dt><dd>JavaFX 21 com CSS próprio</dd>
           <dt>Banco</dt><dd>SQLite via sqlite-jdbc</dd>
-          <dt>Build</dt><dd>Maven · shade plugin</dd>
-          <dt>Empacotamento</dt><dd>jpackage (app-image)</dd>
-          <dt>Runtime</dt><dd>JRE embarcado — sem instalar Java</dd>
+          <dt>Build</dt><dd>Maven com shade plugin</dd>
+          <dt>Empacotamento</dt><dd>jpackage · app-image</dd>
+          <dt>Runtime</dt><dd>JRE embarcado, sem instalar Java</dd>
         </dl>
       </div>
       <div class="card rv">
-        <h3>Entrega hoje</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">Um único <code style="font-family:var(--mono);font-size:12.5px">.zip</code> de 74,5 MB. Quem recebe extrai e executa o <code style="font-family:var(--mono);font-size:12.5px">TechCards.exe</code>. Sem instalação, sem Java prévio, sem configuração.</p>
-        <div class="note" style="margin-top:16px">Cabiou num celular por WhatsApp, roda num notebook de sala de aula.</div>
+        <h3>Distribuição</h3>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">Um <code>.zip</code> de 74,5 MB. Quem recebe extrai e executa o <code>TechCards.exe</code>. Sem instalação, sem Java prévio, sem configuração.</p>
+        <div class="note" style="margin-top:16px">Transfere por WhatsApp, roda em notebook de sala de aula, funciona com o Wi-Fi desligado.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 7. A VIRADA ============ -->
+<!-- ============ 8. TRANSICAO ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">A virada</span>
-      <h2 class="rv">O app é o começo. <span class="grad">O projeto é o produto.</span></h2>
-      <p class="lede rv">Um trabalho acadêmico entregue no fim do semestre morre no fim do semestre.
-        A ambição é fazer dele uma estrutura que continue viva depois que a nota sair.</p>
+      <span class="eyebrow rv">Próxima fase</span>
+      <h2 class="rv">Do aplicativo entregue ao projeto aberto</h2>
+      <p class="lede rv">Um trabalho acadêmico entregue no fim do semestre normalmente para junto
+        com ele. A proposta seguinte é fazer dele uma estrutura que continue utilizável
+        depois da entrega.</p>
     </div>
     <div class="grid g2">
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.1-.4 6.4-1.6 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A5 5 0 0 0 5 4.8 5.4 5.4 0 0 0 3.6 7.5c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-1 2.6V22"/></svg></div>
-          <div><h3>Open source de verdade</h3><p>Todo o código no GitHub: arquitetura em camadas, schema do banco, seeds e testes. Não um JAR fechado — a estrutura inteira, legível e forkável.</p></div>
+          <div><h3>Código aberto</h3><p>Repositório público com a arquitetura em camadas, o esquema do banco, as seeds e os testes. Não um artefato binário fechado, e sim a estrutura inteira, legível e modificável.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21.4 8 14 2 9.4h7.6z"/></svg></div>
-          <div><h3>Polido, não funcional</h3><p>Hoje a interface funciona. O passo seguinte é a interface de um produto: microinterações consistentes, responsividade, wizard de primeiro uso e acessibilidade de verdade.</p></div>
+          <div><h3>Acabamento de interface</h3><p>A interface já atende ao escopo. O passo seguinte é consistência visual, microinterações, responsividade, primeiro uso guiado e acessibilidade verificada.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div><h3>Além dos cards padrão</h3><p>Hoje o formato de estudo é o card. Amanhã a escolha é sua. Quiz, timer, modo prova, estudo em grupo, gerador automático a partir de PDF.</p></div>
+          <div><h3>Mais formas de estudo</h3><p>Além do card e do dashboard já entregues: modo prova, importação de PDF, busca e revisão espaçada.</p></div>
         </div>
       </div>
       <div class="card rv">
         <div class="disc">
           <div class="disc__ic"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0-6 0v6a3 3 0 0 0 6 0v-1a3 3 0 0 0 3-3V8a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/><path d="M20 9a3 3 0 0 0-3-3 3 3 0 0 0-3 3v6a3 3 0 0 0 6 0v-1a3 3 0 0 0 3-3z"/></svg></div>
-          <div><h3>Um MCP, não só um app</h3><p>Transformar o banco em superfície de que agentes e humanos mexem: consultar desempenho, gerar decks e automatizar estudo pelo mesmo protocolo.</p></div>
+          <div><h3>Servidor MCP local</h3><p>Expor o banco de estudos como protocolo, para que agentes e pessoas consultem desempenho, gerem decks e automatizem sessões pela mesma interface.</p></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 8. FORMAS DE ESTUDO ============ -->
+<!-- ============ 9. FORMAS DE ESTUDO ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Visão · formas de estudo</span>
-      <h2 class="rv">O card é só <span class="hl-b">a primeira forma</span></h2>
-      <p class="lede rv">O card clássico, o dashboard e a caça ao erro já existem. A ambição é
-        acrescentar as formas que ainda não há — porque ninguém estuda do mesmo jeito todo dia.</p>
+      <span class="eyebrow rv">Escopo futuro</span>
+      <h2 class="rv">Formas de estudo: o que existe e o que falta</h2>
+      <p class="lede rv">A separação abaixo é deliberada. O que já está no código aparece como
+        entregue; o que não está aparece como pendência, sem dressing.</p>
     </div>
     <div class="grid g3">
       <div class="card rv">
-        <span class="chip" style="background:rgba(10,132,255,.14);border-color:rgba(10,132,255,.32);color:#9cc9ff">Já existe</span>
+        <span class="tag tag--b">Entregue</span>
         <h3 style="margin-top:14px">Card clássico</h3>
         <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">Frente, verso, virada 3D, acerto, erro, som e streak. Fila embaralhada por aleatório ou por dificuldade.</p>
       </div>
       <div class="card rv">
-        <span class="chip" style="background:rgba(10,132,255,.14);border-color:rgba(10,132,255,.32);color:#9cc9ff">Já existe</span>
-        <h3 style="margin-top:14px">Caça ao erro</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">O dashboard já ranca os 5 cards que você mais errou. Falta eles virarem uma fila de estudo, não um número numa tela.</p>
+        <span class="tag tag--b">Entregue</span>
+        <h3 style="margin-top:14px">Ranking de erros</h3>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">O dashboard ranca os 5 cards mais errados. Falta convertê-los em fila de estudo, e não apenas em número numa tela.</p>
       </div>
       <div class="card rv">
-        <span class="chip chip--r">Não existe</span>
+        <span class="tag tag--r">Pendente</span>
         <h3 style="margin-top:14px">Modo prova</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">Cronometrado, sem revelar, resultado ao fim. É o formato que o vestibular e a prova real exigem.</p>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">Cronometrado, sem revelação antecipada, resultado ao fim. É o formato que a avaliação real exige.</p>
       </div>
       <div class="card rv">
-        <span class="chip chip--r">Não existe</span>
+        <span class="tag tag--r">Pendente</span>
         <h3 style="margin-top:14px">Revisão espaçada</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">Hoje o agendamento é seu. SM-2 ou equivalente é o coração da próxima fase — e a lacuna mais honesta do produto.</p>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">Hoje o agendamento é manual. Um algoritmo equivalente ao SM-2 é a lacuna mais relevante do produto.</p>
       </div>
       <div class="card rv">
-        <span class="chip chip--r">Não existe</span>
-        <h3 style="margin-top:14px">Buscar e filtrar</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">Não há busca nos cards de um deck. Em 90 itens já é um incômodo real, não um detalhe.</p>
+        <span class="tag tag--r">Pendente</span>
+        <h3 style="margin-top:14px">Busca e filtro</h3>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">Não há busca nos cards de um deck. Em 90 itens isso já é limitação de uso, não detalhe de implementação.</p>
       </div>
       <div class="card rv">
-        <span class="chip chip--r">Não existe</span>
+        <span class="tag tag--r">Pendente</span>
         <h3 style="margin-top:14px">Importar PDF</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">O material do professor entra como deck novo. Se ele não está no app, o app não serve — e hoje só entra digitando card por card.</p>
+        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.55">O material do professor entra como deck novo. Hoje só é possível cadastrar card por card.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 9. O MCP ============ -->
+<!-- ============ 10. MCP ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Visão · a peça ambiciosa</span>
-      <h2 class="rv">O mesmo protocolo, <span class="grad">para agentes e para gente</span></h2>
-      <p class="lede rv">Um Model Context Protocol sobre o banco de estudos: a mesma superfície que
-        um agente usa para automatizar é a mesma que você usa para estudar.</p>
+      <span class="eyebrow rv">Ambição · MCP</span>
+      <h2 class="rv">O banco local como protocolo</h2>
+      <p class="lede rv">Um Model Context Protocol sobre o banco de estudos, para que a mesma
+        superfície que um agente usa para automatizar seja a mesma usada para estudar.</p>
     </div>
     <div class="grid g2">
       <div class="card rv">
-        <h3>Um agente pode</h3>
-        <div class="chips" style="margin-top:15px;gap:9px">
-          <span class="chip chip--b">listar decks</span>
-          <span class="chip chip--b">criar cards</span>
-          <span class="chip chip--b">registrar sessão</span>
-          <span class="chip chip--b">consultar desempenho</span>
-          <span class="chip chip--b">gerar quiz por tema</span>
-          <span class="chip chip--b">exportar histórico</span>
+        <h3>Operações previstas para o agente</h3>
+        <div class="tags" style="margin-top:15px;gap:9px">
+          <span class="tag tag--b">listar decks</span>
+          <span class="tag tag--b">criar cards</span>
+          <span class="tag tag--b">registrar sessão</span>
+          <span class="tag tag--b">consultar desempenho</span>
+          <span class="tag tag--b">gerar quiz por tema</span>
+          <span class="tag tag--b">exportar histórico</span>
         </div>
-        <p style="margin-top:17px;font-size:13.5px;color:var(--muted);line-height:1.6">A ideia concreta: você pede ao agente “monte um quiz de deadlock com meus erros”, ele lê o histórico, monta a sessão e grava o resultado de volta no mesmo banco. O app mostra tudo na tela.</p>
+        <p style="margin-top:17px;font-size:13.5px;color:var(--muted);line-height:1.6">Exemplo concreto: solicitar “monte um quiz de deadlock a partir dos meus erros”. O agente lê o histórico, monta a sessão e grava o resultado de volta no mesmo banco, onde a interface já mostra tudo.</p>
       </div>
       <div class="card rv">
-        <h3>E você pode</h3>
-        <div class="chips" style="margin-top:15px;gap:9px">
-          <span class="chip">brincar com o banco</span>
-          <span class="chip">ver os próprios números</span>
-          <span class="chip">automatizar backup</span>
-          <span class="chip">gerar material novo</span>
+        <h3>Para o usuário</h3>
+        <div class="tags" style="margin-top:15px;gap:9px">
+          <span class="tag">consultar os próprios números</span>
+          <span class="tag">automatizar backup</span>
+          <span class="tag">gerar material novo</span>
         </div>
-        <p style="margin-top:17px;font-size:13.5px;color:var(--muted);line-height:1.6">“MCP” costuma soar como coisa de servidor. Aqui é o contrário: é o <strong>SQLite local virando protocolo</strong>. Sem nuvem, sem conta, sem Give your data away. O playground é o seu banco.</p>
+        <p style="margin-top:17px;font-size:13.5px;color:var(--muted);line-height:1.6">A ideia não é levar dados para fora. É o oposto: o SQLite local deixa de ser apenas um arquivo de armazenamento e passa a ser uma interface programável, sem nuvem e sem conta.</p>
       </div>
     </div>
     <div class="note rv" style="margin-top:22px">
-      <strong>Por que isso importa para o curso.</strong> Construir um servidor MCP exige
-      projeto, protocolo, tratamento de erro e documentação — as mesmas competências
-      pedidas nas disciplinas que o app estuda. O software deixa de ser o fim e passa
-      a ser o campo de treino.
+      <strong>Relação com o curso.</strong> Construir um servidor MCP exige projeto,
+      protocolo, tratamento de erro e documentação — competências avaliadas nas mesmas
+      disciplinas que o aplicativo estuda. O software deixa de ser o produto final e
+      passa a ser o campo de treino.
     </div>
   </div>
 </section>
 
-<!-- ============ 10. ROADMAP ============ -->
+<!-- ============ 11. ROADMAP ============ -->
 <section class="slide">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Roadmap</span>
-      <h2 class="rv">O caminho, em ordem</h2>
+      <span class="eyebrow rv">Planejamento</span>
+      <h2 class="rv">As fases, em ordem</h2>
     </div>
     <div class="grid g4">
       <div class="card rv">
-        <span class="chip">Fase 1 · agora</span>
-        <h3 style="margin-top:14px">Abrir o código</h3>
-        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Repositório público, seeds documentadas, README honesto eissues abertas para quem quiser contribute.</p>
+        <span class="tag">Fase 1 · atual</span>
+        <h3 style="margin-top:14px">Publicar o código</h3>
+        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Repositório público, seeds documentadas, README honesto e issues abertas para quem quiser contribuir.</p>
       </div>
       <div class="card rv">
-        <span class="chip chip--b">Fase 2</span>
-        <h3 style="margin-top:14px">Polir a interface</h3>
-        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Design system próprio, microinterações, responsividade, primeiro uso guiado. O mesmo kernel, muito mais acabamento.</p>
+        <span class="tag tag--b">Fase 2</span>
+        <h3 style="margin-top:14px">Acabamento da interface</h3>
+        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Design system próprio, microinterações, responsividade e primeiro uso guiado. Mesmo núcleo, mais acabamento.</p>
       </div>
       <div class="card rv">
-        <span class="chip chip--b">Fase 3</span>
+        <span class="tag tag--b">Fase 3</span>
         <h3 style="margin-top:14px">Formas de estudo</h3>
-        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Modo prova, caça ao erro, importação de PDF e revisão espaçada. De deck fixo para plataforma.</p>
+        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Modo prova, revisão espaçada, busca e importação de PDF. De deck fixo para plataforma.</p>
       </div>
       <div class="card rv">
-        <span class="chip chip--r">Fase 4</span>
-        <h3 style="margin-top:14px">O MCP</h3>
-        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Servidor local, tools documentadas, playground. O banco como protocolo — a peça que conecta tudo.</p>
+        <span class="tag tag--r">Fase 4</span>
+        <h3 style="margin-top:14px">Servidor MCP</h3>
+        <p style="margin-top:9px;font-size:13.5px;color:var(--muted);line-height:1.55">Servidor local, operações documentadas e playground. O banco como protocolo, conectando as fases anteriores.</p>
       </div>
     </div>
     <div class="note rv" style="margin-top:24px">
-      A ordem importa: <strong>abrir antes de polir</strong>. Um projeto aberto recebe
-      contribuição; um projeto bonito fechado recebe aplauso e nenhum commit.
+      A ordem importa: <strong>publicar antes de polir</strong>. Um projeto aberto
+      recebe contribuição; um projeto fechado e não publicado costuma ficar restrito
+      ao círculo de quem o fez.
     </div>
   </div>
 </section>
 
-<!-- ============ 11. ENCERRAMENTO ============ -->
+<!-- ============ 12. ENCERRAMENTO + QR ============ -->
 <section class="slide">
-  <div class="wrap" style="max-width:1000px">
+  <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Convite</span>
-      <h2 class="rv">Quatro disciplinas,<br>um aplicativo, <span class="grad">um laboratório aberto.</span></h2>
-      <p class="lede rv">O TechCards já funciona hoje e já roda na sua máquina. O que vem depois
-        — os decks abertos, as formas novas de estudar e o MCP — só existe se alguém continuar.
-        Que essa alguém possa ser qualquer pessoa.</p>
+      <span class="eyebrow rv">Encerramento</span>
+      <h2 class="rv">Quatro disciplinas,<br>um aplicativo, <span class="grad">um projeto aberto.</span></h2>
+      <p class="lede rv">O aplicativo já funciona e já roda na máquina de quem o instala. O que
+        vem depois — os decks abertos, as formas novas de estudar e o protocolo MCP — só se
+        sustenta se alguém der continuidade.</p>
     </div>
-    <div class="grid g2" style="margin-top:26px">
-      <div class="card rv">
-        <h3>Para testar agora</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">Um <code style="font-family:var(--mono);font-size:12.5px">.zip</code> de 74,5 MB. Extrai, executa o <code style="font-family:var(--mono);font-size:12.5px">TechCards.exe</code>, e os 90 cards aparecem sozinhos. Sem instalar Java.</p>
+    <div class="qrow rv">
+      <div>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Para testar</h3>
+            <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">Um <code>.zip</code> de 74,5 MB. Extrair, executar o <code>TechCards.exe</code>, e os 90 cards são semeados no primeiro uso. Sem instalar Java.</p>
+          </div>
+          <div class="card">
+            <h3>Para continuar</h3>
+            <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">Código, seeds e esquema no repositório. A arquitetura em camadas foi organizada para ser lida e modificada, não apenas executada.</p>
+          </div>
+        </div>
+        <div class="cta">
+          <a class="btn btn--p" href="https://github.com/KelvinOliveiraCode/techcards" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.1-.4 6.4-1.6 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A5 5 0 0 0 5 4.8 5.4 5.4 0 0 0 3.6 7.5c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-1 2.6V22"/></svg>
+            github.com/KelvinOliveiraCode/techcards
+          </a>
+        </div>
       </div>
-      <div class="card rv">
-        <h3>Para continuar</h3>
-        <p style="margin-top:9px;font-size:14px;color:var(--muted);line-height:1.6">Código, seeds e schema no GitHub. Fork, issue ou PR — a arquitetura em camadas foi feita para ser lida, não para ser admirada de longe.</p>
+      <div>
+        <div class="qrbox"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges" role="img" aria-label="QR code para o repositorio do TechCards no GitHub"><rect width="33" height="33" fill="#FFFFFF"/><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM16 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM23 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM29 0h1v1h-1zM30 0h1v1h-1zM31 0h1v1h-1zM32 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM17 1h1v1h-1zM21 1h1v1h-1zM23 1h1v1h-1zM24 1h1v1h-1zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM15 2h1v1h-1zM18 2h1v1h-1zM19 2h1v1h-1zM20 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM26 2h1v1h-1zM28 2h1v1h-1zM29 2h1v1h-1zM30 2h1v1h-1zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM15 3h1v1h-1zM18 3h1v1h-1zM22 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM29 3h1v1h-1zM30 3h1v1h-1zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM24 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM29 4h1v1h-1zM30 4h1v1h-1zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM10 5h1v1h-1zM11 5h1v1h-1zM12 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM21 5h1v1h-1zM22 5h1v1h-1zM24 5h1v1h-1zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM29 6h1v1h-1zM30 6h1v1h-1zM31 6h1v1h-1zM32 6h1v1h-1zM8 7h1v1h-1zM9 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM23 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM3 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM17 8h1v1h-1zM18 8h1v1h-1zM21 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM29 8h1v1h-1zM31 8h1v1h-1zM32 8h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM4 9h1v1h-1zM7 9h1v1h-1zM8 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM23 9h1v1h-1zM26 9h1v1h-1zM27 9h1v1h-1zM29 9h1v1h-1zM30 9h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM13 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM22 10h1v1h-1zM23 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM28 10h1v1h-1zM29 10h1v1h-1zM31 10h1v1h-1zM32 10h1v1h-1zM0 11h1v1h-1zM3 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM22 11h1v1h-1zM25 11h1v1h-1zM27 11h1v1h-1zM29 11h1v1h-1zM2 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM14 12h1v1h-1zM16 12h1v1h-1zM19 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM24 12h1v1h-1zM25 12h1v1h-1zM28 12h1v1h-1zM29 12h1v1h-1zM0 13h1v1h-1zM4 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM21 13h1v1h-1zM22 13h1v1h-1zM24 13h1v1h-1zM27 13h1v1h-1zM29 13h1v1h-1zM31 13h1v1h-1zM0 14h1v1h-1zM2 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM11 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM24 14h1v1h-1zM26 14h1v1h-1zM27 14h1v1h-1zM29 14h1v1h-1zM30 14h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM15 15h1v1h-1zM18 15h1v1h-1zM21 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM25 15h1v1h-1zM26 15h1v1h-1zM28 15h1v1h-1zM29 15h1v1h-1zM30 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM9 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM25 16h1v1h-1zM26 16h1v1h-1zM28 16h1v1h-1zM29 16h1v1h-1zM30 16h1v1h-1zM2 17h1v1h-1zM4 17h1v1h-1zM5 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM15 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM25 17h1v1h-1zM26 17h1v1h-1zM28 17h1v1h-1zM29 17h1v1h-1zM31 17h1v1h-1zM32 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM7 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM12 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM24 18h1v1h-1zM25 18h1v1h-1zM27 18h1v1h-1zM28 18h1v1h-1zM30 18h1v1h-1zM31 18h1v1h-1zM0 19h1v1h-1zM1 19h1v1h-1zM2 19h1v1h-1zM7 19h1v1h-1zM10 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM22 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM25 19h1v1h-1zM26 19h1v1h-1zM28 19h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM10 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM22 20h1v1h-1zM29 20h1v1h-1zM30 20h1v1h-1zM31 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM5 21h1v1h-1zM7 21h1v1h-1zM9 21h1v1h-1zM10 21h1v1h-1zM11 21h1v1h-1zM12 21h1v1h-1zM13 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM23 21h1v1h-1zM26 21h1v1h-1zM27 21h1v1h-1zM29 21h1v1h-1zM32 21h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM15 22h1v1h-1zM17 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM23 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM27 22h1v1h-1zM30 22h1v1h-1zM31 22h1v1h-1zM32 22h1v1h-1zM1 23h1v1h-1zM2 23h1v1h-1zM3 23h1v1h-1zM5 23h1v1h-1zM9 23h1v1h-1zM10 23h1v1h-1zM12 23h1v1h-1zM13 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM26 23h1v1h-1zM27 23h1v1h-1zM28 23h1v1h-1zM29 23h1v1h-1zM32 23h1v1h-1zM0 24h1v1h-1zM2 24h1v1h-1zM4 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM25 24h1v1h-1zM26 24h1v1h-1zM27 24h1v1h-1zM28 24h1v1h-1zM31 24h1v1h-1zM32 24h1v1h-1zM8 25h1v1h-1zM10 25h1v1h-1zM13 25h1v1h-1zM14 25h1v1h-1zM15 25h1v1h-1zM16 25h1v1h-1zM19 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM24 25h1v1h-1zM28 25h1v1h-1zM29 25h1v1h-1zM31 25h1v1h-1zM0 26h1v1h-1zM1 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM5 26h1v1h-1zM6 26h1v1h-1zM8 26h1v1h-1zM10 26h1v1h-1zM13 26h1v1h-1zM14 26h1v1h-1zM17 26h1v1h-1zM18 26h1v1h-1zM19 26h1v1h-1zM20 26h1v1h-1zM21 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM26 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM9 27h1v1h-1zM10 27h1v1h-1zM16 27h1v1h-1zM17 27h1v1h-1zM18 27h1v1h-1zM20 27h1v1h-1zM23 27h1v1h-1zM24 27h1v1h-1zM28 27h1v1h-1zM29 27h1v1h-1zM30 27h1v1h-1zM31 27h1v1h-1zM0 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM6 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM15 28h1v1h-1zM16 28h1v1h-1zM17 28h1v1h-1zM18 28h1v1h-1zM19 28h1v1h-1zM22 28h1v1h-1zM23 28h1v1h-1zM24 28h1v1h-1zM25 28h1v1h-1zM26 28h1v1h-1zM27 28h1v1h-1zM28 28h1v1h-1zM30 28h1v1h-1zM0 29h1v1h-1zM2 29h1v1h-1zM3 29h1v1h-1zM4 29h1v1h-1zM6 29h1v1h-1zM8 29h1v1h-1zM10 29h1v1h-1zM13 29h1v1h-1zM16 29h1v1h-1zM17 29h1v1h-1zM19 29h1v1h-1zM21 29h1v1h-1zM22 29h1v1h-1zM23 29h1v1h-1zM27 29h1v1h-1zM29 29h1v1h-1zM31 29h1v1h-1zM32 29h1v1h-1zM0 30h1v1h-1zM2 30h1v1h-1zM3 30h1v1h-1zM4 30h1v1h-1zM6 30h1v1h-1zM8 30h1v1h-1zM13 30h1v1h-1zM15 30h1v1h-1zM16 30h1v1h-1zM17 30h1v1h-1zM20 30h1v1h-1zM22 30h1v1h-1zM26 30h1v1h-1zM27 30h1v1h-1zM30 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM9 31h1v1h-1zM11 31h1v1h-1zM12 31h1v1h-1zM13 31h1v1h-1zM17 31h1v1h-1zM20 31h1v1h-1zM22 31h1v1h-1zM23 31h1v1h-1zM24 31h1v1h-1zM26 31h1v1h-1zM27 31h1v1h-1zM28 31h1v1h-1zM32 31h1v1h-1zM0 32h1v1h-1zM1 32h1v1h-1zM2 32h1v1h-1zM3 32h1v1h-1zM4 32h1v1h-1zM5 32h1v1h-1zM6 32h1v1h-1zM8 32h1v1h-1zM10 32h1v1h-1zM11 32h1v1h-1zM12 32h1v1h-1zM16 32h1v1h-1zM18 32h1v1h-1zM19 32h1v1h-1zM21 32h1v1h-1zM23 32h1v1h-1zM26 32h1v1h-1zM28 32h1v1h-1zM30 32h1v1h-1z" fill="#1E1E1E"/></svg></div>
+        <p class="qrcap">APONTE A CÂMERA<b>github.com/KelvinOliveiraCode/techcards</b></p>
       </div>
     </div>
-    <div class="cta rv">
-      <span class="btn btn--p">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        TechCards Desktop
-      </span>
-      <span class="btn btn--g">
-        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.1-.4 6.4-1.6 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A5 5 0 0 0 5 4.8 5.4 5.4 0 0 0 3.6 7.5c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-1 2.6V22"/></svg>
-        Aberto no GitHub
-      </span>
-    </div>
-    <p class="rv" style="margin-top:34px;font:500 12.5px/1.7 var(--mono);color:var(--muted);letter-spacing:.05em">
+    <p class="rv" style="margin-top:30px;font:500 12.5px/1.7 var(--mono);color:var(--muted);letter-spacing:.05em">
       Java 21 · JavaFX 21 · SQLite · Maven · jpackage — trabalho acadêmico de Ciência da Computação
     </p>
   </div>
@@ -751,7 +853,7 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
   <div class="dots" id="dots"></div>
   <div class="nav">
     <button class="nb" id="prev" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-    <div class="count" id="count">01 / 11</div>
+    <div class="count" id="count">01 / 12</div>
     <button class="nb" id="next" aria-label="Próximo"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
 </div>
@@ -763,9 +865,6 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var total  = slides.length;
   var idx    = 0;
-  var DWELL  = 11000;                 // ms por slide no autoplay
-  var timer  = null;
-  var start  = Date.now();
 
   var elProg  = document.getElementById('prog');
   var elDots  = document.getElementById('dots');
@@ -793,9 +892,10 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
     });
     dots.forEach(function(d, i){ d.classList.toggle('is-on', i === idx); });
     elCount.textContent = pad(idx + 1) + ' / ' + pad(total);
+    /* barra marca POSICAO no deck, nao progresso de tempo: sem autoplay */
+    elProg.style.width = ((idx + 1) / total * 100) + '%';
     btnPrev.disabled = idx === 0;
     btnNext.disabled = idx === total - 1;
-    start = Date.now();
   }
 
   function go(n){
@@ -810,7 +910,6 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
   btnNext.addEventListener('click', next);
   btnPrev.addEventListener('click', prev);
 
-  /* ---------- teclado ---------- */
   document.addEventListener('keydown', function(e){
     var k = e.key;
     if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); next(); }
@@ -819,7 +918,6 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
     else if (k === 'End')                                   { e.preventDefault(); go(total - 1); }
   });
 
-  /* ---------- toque / swipe ---------- */
   var tx = 0, ty = 0;
   document.addEventListener('touchstart', function(e){
     tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY;
@@ -830,30 +928,10 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
     if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
   }, {passive:true});
 
-  /* ---------- autoplay + barra de progresso ---------- */
-  function tick(){
-    if (idx === total - 1) { elProg.style.width = '100%'; return; }
-    var p = (Date.now() - start) / DWELL;
-    elProg.style.width = Math.min(100, p * 100) + '%';
-    if (p >= 1) { idx++; render(); }
-  }
-  setInterval(tick, 60);
-
-  /* ---------- loop sem fim ao chegar no fim ---------- */
-  var last = slides[total - 1];
-  new MutationObserver(function(){
-    if (last.classList.contains('is-active')) {
-      // deixa o último slide respirar antes de voltar
-      setTimeout(function(){ go(0); }, DWELL);
-    }
-  }).observe(last, {attributes:true, attributeFilter:['class']});
-
   render();
-  go(1); render();
 
   /* ============================================================
-     PARTÍCULAS DE FUNDO — loop contínuo, canvas 2D.
-     Token de código flutuando em loop suave e sem teto.
+     PARTÍCULAS DE FUNDO — loop contínuo em canvas 2D.
      ============================================================ */
   var cv = document.getElementById('fx');
   var cx = cv.getContext('2d');
@@ -875,9 +953,7 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
     var count = Math.round((innerWidth * innerHeight) / 26000);
     count = Math.max(26, Math.min(110, count));
     bits = [];
-    for (var i = 0; i < count; i++){
-      bits.push(newBit(true));
-    }
+    for (var i = 0; i < count; i++) bits.push(newBit(true));
   }
 
   function newBit(anywhere){
@@ -899,9 +975,7 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
     for (var i = 0; i < bits.length; i++){
       var b = bits[i];
       if (!REDUCED){
-        b.y += b.vy;
-        b.x += b.drift;
-        b.rot += b.vr;
+        b.y += b.vy; b.x += b.drift; b.rot += b.vr;
         if (b.y < -60 * DPR || b.x < -60 * DPR || b.x > W + 60 * DPR) bits[i] = newBit(false);
       }
       cx.save();
@@ -910,8 +984,8 @@ h3{font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
       cx.font = b.s.toFixed(1) + 'px ui-monospace, Menlo, Consolas, monospace';
       cx.textAlign = 'center';
       cx.fillStyle = (b.ch === '0' || b.ch === '1')
-        ? 'rgba(255,69,58,'   + b.a.toFixed(3) + ')'
-        : 'rgba(10,132,255,'  + b.a.toFixed(3) + ')';
+        ? 'rgba(255,69,58,'  + b.a.toFixed(3) + ')'
+        : 'rgba(10,132,255,' + b.a.toFixed(3) + ')';
       cx.fillText(b.ch, 0, 0);
       cx.restore();
     }
