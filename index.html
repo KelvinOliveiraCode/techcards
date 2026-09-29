@@ -1050,8 +1050,18 @@ SQLite · techcards.db   user.home/.techcards/</pre>
     if (!document.hidden) refit();
   });
   setTimeout(fitSlides, 80);
-  /* rodape de seguranca: se algo mudar depois, ainda corrige sozinho */
-  setInterval(fitSlides, 2000);
+
+  /* ResizeObserver em vez de polling: so recalcula quando o conteudo
+     realmente muda de tamanho. Um setInterval aqui forca reflow em todos
+     os slides e briga com o canvas de fundo. */
+  if (window.ResizeObserver){
+    var ro = new ResizeObserver(refit);
+    slides.forEach(function(s){
+      var w = s.querySelector('.wrap');
+      if (w) ro.observe(w);
+    });
+    ro.observe(document.documentElement);
+  }
 })();
 </script>
 </body>
