@@ -241,7 +241,9 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
    QR CODE (ultimo slide)
    ============================================================ */
 .qrow{display:grid;grid-template-columns:1fr auto;gap:34px;align-items:center}
-.qrbox{background:#FFFFFF;border-radius:16px;padding:16px;line-height:0;
+/* QR: 186px / 33 modulos = 5,64px por modulo. padding 24px = 4,2 modulos,
+   que e a quiet zone minima da spec — abaixo disso scanners falham. */
+.qrbox{background:#FFFFFF;border-radius:16px;padding:24px;line-height:0;
   box-shadow:0 24px 60px -22px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.14);
   transition:transform .55s var(--ease),box-shadow .55s var(--ease)}
 .qrbox:hover{transform:translateY(-5px) scale(1.02);
@@ -327,6 +329,7 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
   .count{min-width:44px;font-size:11px}
   .techrow{grid-template-columns:1fr;gap:6px}
   .qrbox svg{width:158px;height:158px}
+  .qrbox{padding:20px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;animation-iteration-count:1 !important;
