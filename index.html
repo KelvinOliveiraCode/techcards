@@ -569,31 +569,23 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
         </dl>
       </div>
     </div>
-    <div class="grid g2" style="margin-top:16px;align-items:start">
+    <div class="grid g2" style="margin-top:12px;align-items:start">
       <div class="card rv">
         <h3>Arquitetura em camadas</h3>
-        <pre class="archcode" style="margin-top:13px">┌──────────────────────────────┐
-│  UI · JavaFX + CSS           │  Controllers e FXML
-├──────────────────────────────┤
-│  Services · regras de negócio│  DeckService, EstudoService…
-├──────────────────────────────┤
-│  DAO / Repositório           │  DeckDAO, CardDAO…
-├──────────────────────────────┤
-│  SQLite · techcards.db       │  user.home/.techcards/
-└──────────────────────────────┘</pre>
+        <pre class="archcode" style="margin-top:11px">UI · JavaFX + CSS        Controllers e FXML
+Services · regras       DeckService, EstudoService
+DAO / Repositório       DeckDAO, CardDAO
+SQLite · techcards.db   user.home/.techcards/</pre>
       </div>
       <div class="card rv">
-        <h3>Consequências práticas</h3>
-        <p style="margin-top:11px;font-size:14px;color:var(--muted);line-height:1.62">
-          Nenhuma camada depende de outra além da direção da regra: a UI
-          conhece os Services, os Services conhecem o DAO, e o DAO conhece o SQL.
+        <h3>O que a separação permite</h3>
+        <p style="margin-top:10px;font-size:13.2px;color:var(--muted);line-height:1.58">
+          As dependências seguem uma direção só: a UI conhece os Services, os Services
+          conhecem o DAO, e o DAO conhece o SQL. Disso resultam quatro coisas concretas —
+          testes de regra de negócio rodam sem interface gráfica; trocar o SQLite por
+          outro banco mexe apenas no DAO; a seed entra por <code>seed.json</code>, sem
+          SQL fixo no código; e o backup é copiar um arquivo, porque não existe servidor.
         </p>
-        <ul style="margin:14px 0 0;padding-left:20px;font-size:14px;color:var(--muted);line-height:1.72">
-          <li>Testes de regra de negócio rodam sem interface gráfica</li>
-          <li>Trocar o SQLite por outro banco mexe só no DAO</li>
-          <li>A seed entra por <code>seed.json</code>, sem SQL hardcoded</li>
-          <li>O backup é copiar um arquivo, porque não há servidor</li>
-        </ul>
       </div>
     </div>
   </div>
@@ -702,7 +694,7 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
 </section>
 
 <!-- ============ 9. FORMAS DE ESTUDO ============ -->
-<section class="slide">
+<section class="slide slide--dense">
   <div class="wrap">
     <div class="shead">
       <span class="eyebrow rv">Escopo futuro</span>
@@ -824,7 +816,7 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
 </section>
 
 <!-- ============ 12. ENCERRAMENTO + QR ============ -->
-<section class="slide">
+<section class="slide slide--dense">
   <div class="wrap">
     <div class="shead">
       <span class="eyebrow rv">Encerramento</span>
@@ -1024,38 +1016,42 @@ code,.code{font-family:var(--mono);font-size:.9em;color:#9cc9ff;
      slide. Se estourar, aplica uma escala uniforme e centralizada.
      Sem isso, texto novo num slide quebra o layout silenciosamente.
      ============================================================ */
-  var MIN_SCALE = 0.7;
+  var MIN_SCALE = 0.72;
 
   function fitSlides(){
     slides.forEach(function(s){
       var w = s.querySelector('.wrap');
       if (!w) return;
-      w.style.transform = '';
 
       var cs = getComputedStyle(s);
       var padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
       var available = s.clientHeight - padY;
-      var natural = w.offsetHeight;
+      var natural = w.offsetHeight;      // ignora transform: altura de layout
 
       if (natural > available && available > 0){
         var k = available / natural;
         if (k < MIN_SCALE) k = MIN_SCALE;
         w.style.transform = 'scale(' + k.toFixed(4) + ')';
         w.style.transformOrigin = 'center center';
+      } else {
+        w.style.transform = '';
       }
     });
   }
 
+  function refit(){ clearTimeout(refit._t); refit._t = setTimeout(fitSlides, 40); }
+
   if (document.fonts && document.fonts.ready){
-    document.fonts.ready.then(fitSlides).catch(function(){});
+    document.fonts.ready.then(function(){ fitSlides(); }).catch(function(){});
   }
   window.addEventListener('load', fitSlides);
-  var fitTimer;
-  addEventListener('resize', function(){
-    clearTimeout(fitTimer);
-    fitTimer = setTimeout(fitSlides, 120);
-  }, {passive:true});
-  setTimeout(fitSlides, 60);
+  window.addEventListener('resize', refit, {passive:true});
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) refit();
+  });
+  setTimeout(fitSlides, 80);
+  /* rodape de seguranca: se algo mudar depois, ainda corrige sozinho */
+  setInterval(fitSlides, 2000);
 })();
 </script>
 </body>
