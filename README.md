@@ -1,61 +1,67 @@
-# TechCards — Flashcards Técnicos Offline
+# techcards
 
-![linguagem: HTML](https://img.shields.io/badge/linguagem-HTML-blue)  
-![status: concluido](https://img.shields.io/badge/status-concluido-green)  
-![licenca: MIT](https://img.shields.io/badge/licenca-MIT-blue)
+![linguagem: HTML](https://img.shields.io/badge/linguagem-HTML-blue)   ![status: concluido](https://img.shields.io/badge/status-concluido-green)   ![licenca: MIT](https://img.shields.io/badge/licenca-MIT-blue)
 
-### Descrição
-TechCards - flashcards técnicos offline (SO, Arquitetura, Inglês). Projeto acadêmico de Ciência da Computação.
+## Resumo
 
-### O que faz
-TechCards - flashcards técnicos offline (SO, Arquitetura, Inglês). Projeto acadêmico de Ciência da Computação.
+Pagina ou site estatico em HTML, CSS e JavaScript puro, sem dependencias de build. TechCards - flashcards tecnicos offline (SO, Arquitetura, Ingles). Projeto academico de Ciencia da Computacao.
 
-### Tecnologias
+## Problema / por que existe
+
+O projeto entrega uma solucao web leve, hospedavel em qualquer servidor estatico (incluindo GitHub Pages), sem exigir servidor de aplicacao, banco de dados ou processo de build.
+
+## Arquitetura
+
+- `index.html`: ponto de entrada e estrutura da pagina.
+- CSS: estilo e layout (modo claro/escuro quando aplicavel).
+- JavaScript: interatividade e logica do lado do cliente.
+
+Tudo vive em um ou poucos arquivos, facil de auditar linha por linha.
+
+## Tecnologias
+
 - HTML5
+- CSS3
+- JavaScript (vanilla)
 
-### Como usar
-Abra o arquivo `index.html` no navegador.
+## O que faz
 
-### Estrutura
-Consulte a árvore do repositório para a organização exata de pastas e arquivos.
+TechCards - flashcards tecnicos offline (SO, Arquitetura, Ingles). Projeto academico de Ciencia da Computacao.
 
-### Testes
-Não há contagem de testes registrada nesta metadata. Adicione e execute testes apropriados à linguagem (pytest para Python, ./mvnw test para Java, npm test para JavaScript/TypeScript).
+## Como rodar
 
-### Licença
-MIT
+Abra o arquivo `index.html` diretamente no navegador, ou sirva localmente:
 
-### Autor
-Kelvin Oliveira — github.com/KelvinOliveiraCode
+```
+python -m http.server 8080
+# acesse http://localhost:8080
+```
 
----
+## Estrutura do projeto
 
-# TechCards — Offline Technical Flashcards
+- index.html, README.en.md, README.md
 
-![language: HTML](https://img.shields.io/badge/language-HTML-blue)  
-![status: concluido](https://img.shields.io/badge/status-concluido-green)  
-![license: MIT](https://img.shields.io/badge/license-MIT-blue)
 
-### Description
-TechCards - offline technical flashcards (OS, Architecture, English). Computer Science academic project.
+## Trade-offs e decisões
 
-### What it does
-TechCards - offline technical flashcards (OS, Architecture, English). Computer Science academic project.
+- Um unico arquivo (ou poucos): facil de hospedar em qualquer lugar e de auditar.
+- Sem build, sem servidor, sem banco de dados.
+- Dados em snapshot (quando aplicavel), nao em tempo real.
 
-### Technologies
-- HTML5
+## Limitações conhecidas
 
-### How to use
-Open `index.html` in the browser.
+- Sem backend; funcionalidade limitada ao navegador.
+- Dados estaticos ou em snapshot; confirme valores em fontes oficiais.
 
-### Structure
-Check the repository tree for the exact folder and file organization.
+## Testes
 
-### Tests
-No test count recorded in this metadata. Add and run tests appropriate for the language (pytest for Python, ./mvnw test for Java, npm test for JavaScript/TypeScript).
+Nenhum teste automatizado detectado.
 
-### License
-MIT
+## Licença
 
-### Author
-Kelvin Oliveira — github.com/KelvinOliveiraCode
+Distribuído sob a licenca MIT. Consulte o arquivo `LICENSE` do repositorio.
+
+## Autor
+
+Kelvin Oliveira, https://github.com/KelvinOliveiraCode
+Portfolio: https://kelvinoliveiracode.github.io/portfolio/
