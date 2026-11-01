@@ -1,117 +1,95 @@
 # techcards
 
-<div align="center">
-
 **English** · [Português (Brasil)](README.md)
 
-</div>
-
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML) [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS) [![Vanilla JS](https://img.shields.io/badge/Vanilla%20JS-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deployed-222?style=flat-square&logo=githubpages)](https://pages.github.com/) [![MIT License](https://img.shields.io/badge/License-MIT-f4c430?style=flat-square)](LICENSE)
-
-### TechCards - flashcards tecnicos offline (SO, Arquitetura, Ingles). Projeto academico de Ciencia da Computacao.
-
----
+[![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](#) [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](#) [![Vanilla JS](https://img.shields.io/badge/Vanilla%20JS-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
 
 ## What it is
 
-TechCards - flashcards tecnicos offline (SO, Arquitetura, Ingles). Projeto academico de Ciencia da Computacao.
+This repository holds the **slide presentation** for the **TechCards** project: an offline desktop flashcard app for studying Operating Systems, Computer Architecture and Instrumental English — an academic project for a Computer Science course.
 
----
+The `index.html` file is a navigable deck (arrow keys ← →) explaining the product, the delivered scope, the technical decisions, the numbers and the roadmap. It describes the JavaFX application; the app's source code is not in this repository.
 
-## Quick Start
+## Status
 
-Open `index.html` directly in your browser, or serve locally:
+A working, navigable presentation with no build step. Academic project (TechCards app v1.2.0).
 
-```bash
-python -m http.server 8080
-# Access http://localhost:8080
+## Features
+
+- **Slide deck**: keyboard (← →) and control navigation.
+- **Project content**: context (4 subjects), delivered scope, stack decisions, study flow, numbers, phased roadmap and MCP proposal.
+- **Custom dark theme**: palette taken from the application's design system (JavaFX/CSS).
+
+## What the presentation documents
+
+The TechCards app (Java 21 + JavaFX 21 + SQLite):
+
+- **Five screens**: Decks, Cards, Study, Dashboard and Settings.
+- **90 cards in 3 decks** (OS, Architecture, English), seeded on first run.
+- **Protected CRUD**: the default deck is read-only; duplicate to edit.
+- **Configurable study**: shuffled queue (random or by difficulty), 3D flip, sound and streak.
+- **Error-oriented dashboard**: top 5 mistakes, per-deck performance, score and daily streak.
+- **Backup and restore**: export/import `.db`, restore seeds, clear history; logical deletion.
+- **46 automated tests** (JUnit 5), 74.5 MB packaged with an embedded JRE via `jpackage`.
+
+## Architecture (of the described app)
+
+```mermaid
+flowchart LR
+    UI[UI - JavaFX + CSS/FXML] --> SV[Services - rules]
+    SV --> DAO[DAO - DeckDAO, CardDAO]
+    DAO --> DB[(SQLite - techcards.db)]
+    SV --> SEED[seed.json - seeds]
 ```
 
-Or deploy to GitHub Pages / Netlify / Vercel with zero configuration.
+Dependencies flow one way: UI → Services → DAO → SQL. That isolates the business rules, enables headless tests and confines any database change to the DAO.
 
-## How it works
+## Stack (of this repo)
 
-**Arquitetura zero-build, arquivo único** ,  tudo vive em `index.html`:
-- **HTML5** estrutura semântica
-- **CSS3** propriedades customizadas para tema (claro/escuro)
-- **Vanilla ES6+ JavaScript** ,  sem framework, sem build
-- **localStorage** para persistência de tema
-- **Catálogo JSON** (`catalogo.json`) como fonte de dados aberta
+- Pure HTML5 + CSS3 + JavaScript (static deck, no build)
+- No dependencies, no server
 
----
+## Repository layout
 
-## Capabilities
+```
+techcards/
+├── index.html     # slide presentation of the TechCards project
+├── README.md      # pt-BR version
+└── README.en.md   # this file
+```
 
-| Capacidade | Descrição |
-|------------|-------------|
-| Motor de Recomendação | Filtro determinístico: Área ∩ Preço -> Provedor -> Tier gratuito -> Nível de config |
-| Catálogo | 124 serviços de 8 provedores (AWS, Azure, GCP, Oracle, Cloudflare, DO, Firebase, Google) |
-| Dados Abertos | catalogo.json + llms.txt para consumo por chat de IA |
-| Educação | Vocabulário de nuvem (IaaS/PaaS/SaaS), myth-busting, glossário, quiz de 5 perguntas |
-| Tematização | Modo claro/escuro persistido em localStorage, sem CSS externo |
-| Zero Build | index.html único ,  deploy em qualquer lugar (GitHub Pages, Netlify, Vercel) |
-| Auditoria | Cada decisão do filtro exibida: "Como chegamos aqui" rastreia todos 124 serviços |
-| Sem Rastreamento | Sem contas de usuário, sem analytics, sem dependências externas |
+## How to run
 
+Open `index.html` in any browser:
 
----
+```bash
+# any of these
+start index.html
+# or serve locally
+python -m http.server 8000
+# then open http://localhost:8000
+```
 
+Navigation: arrow keys ← → (or the on-screen controls).
 
+## Tests and quality
 
----
+Static deck, no automated tests in this repository. The described app declares 46 JUnit tests (DAO, seed, CRUD, study and metrics).
 
-## FAQ
+## Technical decisions and trade-offs
 
-<details>
-<summary><strong>What is this project?</strong></summary>
+- **Single `index.html` deck**: easy to open and share; in exchange, all content lives in one large file.
+- **Dark theme with animated grid and blobs**: intentional for the presentation; the palette mirrors the real app.
 
-A vanilla JS study/project demonstrating Single-page HTML entry.
+## Known limitations and roadmap
 
-</details>
+- **Presentation only**: the TechCards source (JavaFX/SQLite) is not in this repository.
+- Project roadmap (in the presentation): publish the code, UI polish, exam mode, spaced repetition (SM-2-like), search, PDF import and a local MCP server.
 
-<details>
-<summary><strong>How do I run it?</strong></summary>
+## Development process
 
-See [Quick Start](#quick-start) for copy-paste commands.
+An individual project by Kelvin Oliveira, built with orchestrated AI agents and reviewed by the author. The project content and the review are the author's.
 
-</details>
+## License and author
 
-<details>
-<summary><strong>Are there tests?</strong></summary>
-
-No automated tests in this repository.
-
-</details>
-
-<details>
-<summary><strong>Can I use this in production?</strong></summary>
-
-This is a **study/portfolio project**. Review and harden (auth, persistence, monitoring, etc.) before production use.
-
-</details>
-
-
-
----
-
-## Documentation
-
-- **Source Code** ,  Browse the `src/` directory for implementation details
-- **API Reference** ,  N/A
-- **Architecture Diagram** ,  See [architecture.mermaid](docs/architecture.mermaid) (if present)
-- **Changelog** ,  [CHANGELOG.md](CHANGELOG.md) (if present)
-- **Contributing** ,  [CONTRIBUTING.md](CONTRIBUTING.md) (if present)
-
-## License
-
-[MIT](LICENSE) ,  Kelvin Oliveira
-
----
-
-<div align="center">
-
-**Built with** · Vanilla HTML/CSS/JS
-
-**Author** · [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfolio](https://kelvinoliveiracode.github.io/portfolio/)
-
-</div>
+**Author**: [Kelvin Oliveira](https://github.com/KelvinOliveiraCode) · [Portfolio](https://kelvinoliveiracode.github.io/portfolio/)
